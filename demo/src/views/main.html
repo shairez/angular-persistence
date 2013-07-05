@@ -1,0 +1,27 @@
+<div class="hero-unit">
+
+
+	<div ng-controller="firstCtrl">
+		<ul>
+			<li ng-repeat="task in tasksList">
+				{{task.title}}
+			</li>
+		</ul>
+	</div>
+	<div ng-controller="secondCtrl">
+		<ul>
+			<li ng-repeat="task in tasksList">
+				{{task.title}}
+				<input ng-model="task.title">
+			</li>
+		</ul>
+	</div>
+	<div ng-controller="thirdCtrl">
+		<ul>
+			<li ng-repeat="task in tasksList">
+				{{task.title}}
+			</li>
+		</ul>
+	</div>
+
+</div>
