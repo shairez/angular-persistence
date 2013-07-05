@@ -7,12 +7,14 @@ basePath = '';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-  'src/components/angular/angular.js',
-  'src/components/angular-mocks/angular-mocks.js',
-  'src/scripts/*.js',
-  'src/scripts/**/*.js',
-  'test/mock/**/*.js',
-  'test/spec/**/*.js'
+  'bower_components/angular/angular.js',
+  'bower_components/jasmine-given/dist/jasmine-given.js',
+  'bower_components/angular-mocks/angular-mocks.js',
+  'src/**/*.mdl.js',
+  'src/*.js',
+  'src/**/*.js',
+  'src/**/*.mock.js',	
+  'src/**/*.test.js'
 ];
 
 // list of files to exclude
@@ -36,7 +38,7 @@ colors = true;
 logLevel = LOG_INFO;
 
 // enable / disable watching file and executing tests whenever any file changes
-autoWatch = false;
+autoWatch = true;
 
 // Start these browsers, currently available:
 // - Chrome
@@ -49,7 +51,7 @@ autoWatch = false;
 browsers = ['Chrome'];
 
 // If browser does not capture in given timeout [ms], kill it
-captureTimeout = 5000;
+captureTimeout = 8000;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit

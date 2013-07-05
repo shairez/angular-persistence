@@ -1,5 +1,5 @@
-angular.module("angularOrm")
-	.factory("EntityManager", function($q, $http, $timeout) {
+angular.module("ngPersistence")
+	.factory("ngPersistence.EntityManager", function($q, $http, $timeout) {
 
 
 		/*
@@ -23,15 +23,11 @@ angular.module("angularOrm")
 	}
 
 
-	function createNewEntityList(primaryKey) {
+	function createNewEntityList() {
 		var entityList = [];
-		entityList.$primaryKey = primaryKey;
-		entityList.$lastestFromServerList = [];
-
 		entityList.$query = function() {
 
 		}
-		// createMapOfKeys
 		return entityList;
 	}
 
@@ -120,41 +116,15 @@ angular.module("angularOrm")
 		entityManager.query = function(filter, sort) {
 			var entityList = createNewEntityList(primaryKey);
 
-			// var attach to queries 
-
 			var callUrl = entityManager.resourceUrl;
 
-			var defer = $q.defer();
-
-			// $http.get(callUrl)
-
-			defer.promise.then(function success(newList) {
-				// replaceListContent(entityList.$originalList, result);
-
-				// merge with original entities map
-
+			var promise = entityList.$promise = $http.get(callUrl);
+			promise.success(function(newList){
 				var syncedList = getSyncWithRepositoryList(newList);
-				console.log("Compare Remote", syncedList[0] === localEntitiesRepository[0]);
-
 				replaceListContent(entityList, syncedList);
-
-				//if (result is array)
-				//entityList	
-				// queriesMap[callUrl] = 
-
 			})
 
-			$timeout(function() {
-				defer.resolve([{
-						id: 1,
-						title: "Task 1"
-					}, {
-						id: 2,
-						title: "Task 2"
-					}
-				]);
-			}, 1000)
-
+			
 			return entityList;
 		}
 
