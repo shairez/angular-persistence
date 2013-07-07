@@ -56,6 +56,11 @@ angular.module("ngPersistence")
 		function assertEntityPrimaryKey(entity){
 			if (!entity.hasOwnProperty(entityManager.primaryKey)){
 				throw new Error("Entity must be a primaryKey");
+			}else {
+				var id = entity[entityManager.primaryKey];
+				if (!angular.isString(id) && !angular.isNumber(id)){
+					throw new TypeError("Entity's primaryKey must be a string or a number");
+				}
 			}
 		}
 
@@ -152,43 +157,3 @@ angular.module("ngPersistence")
 	return EntityManager("Task", "/task", "id");
 })
 
-
-
-/*
-
-* holds map by primaryKey of all known entities so far
-  keeps references in all of the queries to the same objects,
-  keeps a copy of the last state from server that they were (to know diffs)
-	for merge - compare lastServer, local and new
-
-
-*	dirty check flag comparing to the original from server only once, 
-	until save or revert
-
-* add a time based EntityManager.saveAll() to sync client & server
-
-  Scenario - grid item in edit mode and same item come back from the 
-  server by a different request... what should we do?
-
-merge
-
-compare items
-
-/ detached + sync
-
-
-query views
-~~~~~~~~~~~
-
-
-
-
-notifications - 
-~~~~~~~~~~~~~
-About to change an changed local item
-
-result from query came back with diff on one of the local objects
-
-resolve conflicts - notification about a possible merge
-
-*/
