@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('angularOrm')
+angular.module('angularPersistenceDemo')
+
+
+
   .controller('MainCtrl', function ($scope) {
     
   })
@@ -18,3 +21,7 @@ angular.module('angularOrm')
   .controller('thirdCtrl', function ($scope, TaskProxy) {
     $scope.tasksList = TaskProxy.query();
   })
+
+.factory("TaskProxy", ["ngPersistence.EntityManager", function(EntityManager) {
+  return EntityManager("Task", "/task", "id");
+}])

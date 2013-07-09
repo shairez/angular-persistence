@@ -33,12 +33,17 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass']
       },
+      library:{
+        files: ['../src/**/*.js'],
+        tasks: ['concat:lib']
+      },
       livereload: {
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
           '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          '<%= yeoman.app %>/lib/{,*/}*.js'
         ],
         tasks: ['livereload']
       }
@@ -142,6 +147,15 @@ module.exports = function (grunt) {
       }
     },
     concat: {
+      lib: {
+         files: {
+          '<%= yeoman.app %>/lib/angular-persistence.js': [
+            '../src/**/*.mdl.js',
+            '../src/**/*.js',
+            '!../src/{,*/}*.test.js'
+          ]
+        }
+      },
       dist: {
         files: {
           '<%= yeoman.dist %>/scripts/scripts.js': [
@@ -290,7 +304,7 @@ module.exports = function (grunt) {
     'imagemin',
     'cssmin',
     'htmlmin',
-    'concat',
+    'concat:dist',
     'copy',
     'cdnify',
     'ngmin',

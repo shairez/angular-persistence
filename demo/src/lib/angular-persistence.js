@@ -1,7 +1,11 @@
-angular.module("angularOrm")
-	.factory("EntityManager", function($q, $http, $timeout) {
+'use strict';
+
+angular.module('ngPersistence', []);
 
 
+
+angular.module("ngPersistence")
+	.factory("ngPersistence.EntityManager", function($q, $http, $timeout) {
 		/*
 
 			entity
@@ -23,18 +27,14 @@ angular.module("angularOrm")
 	}
 
 
-	function createNewEntityList(primaryKey) {
+	function createNewEntityList() {
 		var entityList = [];
-		entityList.$primaryKey = primaryKey;
-		entityList.$lastestFromServerList = [];
-
 		entityList.$query = function() {
 
 		}
-		// createMapOfKeys
 		return entityList;
 	}
-
+ 
 
 	function assertNotEmptyStringParam(paramValue, paramName){
 		if (!paramValue || !angular.isString(paramValue) || paramValue === ""){
@@ -52,14 +52,19 @@ angular.module("angularOrm")
 		entityManager.resourceUrl = resourceUrl;
 		entityManager.primaryKey = primaryKey;
 
-		localEntitiesRepository = entityManager.localEntitiesRepository = {};
-		remoteEntitiesRepository = entityManager.remoteEntitiesRepository = {};
+		var localEntitiesRepository = entityManager.localEntitiesRepository = {};
+		var remoteEntitiesRepository = entityManager.remoteEntitiesRepository = {};
 
 		entityManager.repo = localEntitiesRepository;
 
 		function assertEntityPrimaryKey(entity){
 			if (!entity.hasOwnProperty(entityManager.primaryKey)){
 				throw new Error("Entity must be a primaryKey");
+			}else {
+				var id = entity[entityManager.primaryKey];
+				if (!angular.isString(id) && !angular.isNumber(id)){
+					throw new TypeError("Entity's primaryKey must be a string or a number");
+				}
 			}
 		}
 
@@ -120,41 +125,15 @@ angular.module("angularOrm")
 		entityManager.query = function(filter, sort) {
 			var entityList = createNewEntityList(primaryKey);
 
-			// var attach to queries 
-
 			var callUrl = entityManager.resourceUrl;
 
-			var defer = $q.defer();
-
-			// $http.get(callUrl)
-
-			defer.promise.then(function success(newList) {
-				// replaceListContent(entityList.$originalList, result);
-
-				// merge with original entities map
-
+			var promise = entityList.$promise = $http.get(callUrl);
+			promise.success(function(newList){
 				var syncedList = getSyncWithRepositoryList(newList);
-				console.log("Compare Remote", syncedList[0] === localEntitiesRepository[0]);
-
 				replaceListContent(entityList, syncedList);
-
-				//if (result is array)
-				//entityList	
-				// queriesMap[callUrl] = 
-
 			})
 
-			$timeout(function() {
-				defer.resolve([{
-						id: 1,
-						title: "Task 1"
-					}, {
-						id: 2,
-						title: "Task 2"
-					}
-				]);
-			}, 1000)
-
+			
 			return entityList;
 		}
 
@@ -178,47 +157,4 @@ angular.module("angularOrm")
 	Interface
 */
 
-.factory("TaskProxy", function(EntityManager) {
-	return EntityManager("Task", "/task", "id");
-})
 
-
-
-/*
-
-* holds map by primaryKey of all known entities so far
-  keeps references in all of the queries to the same objects,
-  keeps a copy of the last state from server that they were (to know diffs)
-	for merge - compare lastServer, local and new
-
-
-*	dirty check flag comparing to the original from server only once, 
-	until save or revert
-
-* add a time based EntityManager.saveAll() to sync client & server
-
-  Scenario - grid item in edit mode and same item come back from the 
-  server by a different request... what should we do?
-
-merge
-
-compare items
-
-/ detached + sync
-
-
-query views
-~~~~~~~~~~~
-
-
-
-
-notifications - 
-~~~~~~~~~~~~~
-About to change an changed local item
-
-result from query came back with diff on one of the local objects
-
-resolve conflicts - notification about a possible merge
-
-*/

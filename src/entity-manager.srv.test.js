@@ -77,7 +77,7 @@ describe("Entity Manager", function() {
 			})
 		})
 		
-		describe('Saving changes', function() {
+		xdescribe('Saving changes', function() {
 			Given(function(){ $httpBackend.whenGET("/").respond([{id:1, name:"Test"}]);
 							  queryResult = emInstance.query(); 
 							  $httpBackend.flush(); });

@@ -1,5 +1,13 @@
+'use strict';
+
+angular.module('ngPersistence', []);
+
+
+
 angular.module("ngPersistence")
 	.factory("ngPersistence.EntityManager", function($q, $http, $timeout) {
+
+
 		/*
 
 			entity
@@ -28,7 +36,7 @@ angular.module("ngPersistence")
 		}
 		return entityList;
 	}
- 
+
 
 	function assertNotEmptyStringParam(paramValue, paramName){
 		if (!paramValue || !angular.isString(paramValue) || paramValue === ""){
@@ -46,8 +54,8 @@ angular.module("ngPersistence")
 		entityManager.resourceUrl = resourceUrl;
 		entityManager.primaryKey = primaryKey;
 
-		var localEntitiesRepository = entityManager.localEntitiesRepository = {};
-		var remoteEntitiesRepository = entityManager.remoteEntitiesRepository = {};
+		localEntitiesRepository = entityManager.localEntitiesRepository = {};
+		remoteEntitiesRepository = entityManager.remoteEntitiesRepository = {};
 
 		entityManager.repo = localEntitiesRepository;
 
@@ -151,4 +159,7 @@ angular.module("ngPersistence")
 	Interface
 */
 
+.factory("TaskProxy", function(EntityManager) {
+	return EntityManager("Task", "/task", "id");
+})
 
