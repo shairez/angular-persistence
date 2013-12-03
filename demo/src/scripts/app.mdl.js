@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularPersistenceDemo', ['ngPersistence', 'ngMockE2E', "ui.bootstrap.rating"])
+angular.module('angularPersistenceDemo', ['ngPersistence', 'ngMockE2E', "ui.bootstrap.rating", "ngGrid"])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -15,8 +15,8 @@ angular.module('angularPersistenceDemo', ['ngPersistence', 'ngMockE2E', "ui.boot
   .run(function($httpBackend, $http){
     $httpBackend.whenGET(/.html/).passThrough();
 
-    $httpBackend.whenGET("/task").respond(200, [{id:1, title: "Task 1", rate: 3},
-                                                {id:2, title: "Task 2", rate: 3}]);
+    $httpBackend.whenGET("/ads").respond(200, [{id:1, title: "House", rate: 3},
+                                                {id:2, title: "Car", rate: 3}]);
 
     // $http.get("/main.html").success(function(data){}).error(function(error){
     //   console.log(error)

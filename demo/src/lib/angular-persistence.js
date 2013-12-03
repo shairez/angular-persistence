@@ -42,26 +42,31 @@ angular.module("ngPersistence")
 		}
 	}
 
-	return function(entityName, resourceUrl, primaryKey) {
+	return function(resourceUrl, primaryKey) {
 
-		assertNotEmptyStringParam(entityName, "entityName");
 		assertNotEmptyStringParam(resourceUrl, "resourceUrl");
 		assertNotEmptyStringParam(primaryKey, "primaryKey");
 
-		var entityManager = {};
-		entityManager.resourceUrl = resourceUrl;
-		entityManager.primaryKey = primaryKey;
+		var entityManager,
+            localEntitiesRepository,
+            remoteEntitiesRepository;
 
-		var localEntitiesRepository = entityManager.localEntitiesRepository = {};
-		var remoteEntitiesRepository = entityManager.remoteEntitiesRepository = {};
 
-		entityManager.repo = localEntitiesRepository;
+        entityManager = {
+            query: query
+        };
+
+		localEntitiesRepository = {};
+		remoteEntitiesRepository = {};
+
+
+
 
 		function assertEntityPrimaryKey(entity){
-			if (!entity.hasOwnProperty(entityManager.primaryKey)){
+			if (!entity.hasOwnProperty(primaryKey)){
 				throw new Error("Entity must be a primaryKey");
 			}else {
-				var id = entity[entityManager.primaryKey];
+				var id = entity[primaryKey];
 				if (!angular.isString(id) && !angular.isNumber(id)){
 					throw new TypeError("Entity's primaryKey must be a string or a number");
 				}
@@ -122,10 +127,10 @@ angular.module("ngPersistence")
 			return syncedList;
 		}
 
-		entityManager.query = function(filter, sort) {
+		function query (filter, sort) {
 			var entityList = createNewEntityList(primaryKey);
 
-			var callUrl = entityManager.resourceUrl;
+			var callUrl = resourceUrl;
 
 			var promise = entityList.$promise = $http.get(callUrl);
 			promise.success(function(newList){
@@ -136,12 +141,6 @@ angular.module("ngPersistence")
 			
 			return entityList;
 		}
-
-		entityManager.get = function() {
-
-		}
-
-
 
 		return entityManager;
 

@@ -1,27 +1,13 @@
 
-<div>SERVER SIDE</div>
-
-<div>EDIT A PRODUCT</div>
-
-<div>EDITABLE TABLE</div>
-
 <div class="row">
-	<div class="span4" ng-controller="sortByPriceCtrl">
-		<h3>SORTED BY PRICE</h3>
-		<ul class="thumbnails">
-			<li class="span4" ng-repeat="product in productList">
-				<div class="thumbnail">
-					<p>{{product.title}}</p>
-					<!-- <rating value="product.rate" max="5"></rating> -->
-				</div>
 
-			</li>
-		</ul>
-	</div>
+    <div class="span5">
+        <div ng-grid="myOptions" style="min-height: 300px"></div>
+    </div>
+
+    <div class="span6">
+        <div ng-grid="myOptions" style="min-height: 300px"></div>
+    </div>
 </div>
 
-<div>LIST OF PRODUCTS - SORTED BY DATE
-
-
-</div>
 

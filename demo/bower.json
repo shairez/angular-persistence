@@ -8,8 +8,10 @@
     "angular-resource": "~1.0.5",
     "angular-cookies": "~1.0.5",
     "angular-grid": "2.0.7",
-    "angular-bootstrap":"0.3.0",
-    "jquery": "1.9.1"
+    "angular-bootstrap": "0.3.0",
+    "angular-ui": "",
+    "jquery": "1.9.1",
+    "ng-grid": "2.0.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.5",
