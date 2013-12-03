@@ -1,27 +1,27 @@
-<div class="hero-unit">
 
+<div>SERVER SIDE</div>
 
-	<div ng-controller="firstCtrl">
-		<ul>
-			<li ng-repeat="task in tasksList">
-				{{task.title}}
+<div>EDIT A PRODUCT</div>
+
+<div>EDITABLE TABLE</div>
+
+<div class="row">
+	<div class="span4" ng-controller="sortByPriceCtrl">
+		<h3>SORTED BY PRICE</h3>
+		<ul class="thumbnails">
+			<li class="span4" ng-repeat="product in productList">
+				<div class="thumbnail">
+					<p>{{product.title}}</p>
+					<!-- <rating value="product.rate" max="5"></rating> -->
+				</div>
+
 			</li>
 		</ul>
 	</div>
-	<div ng-controller="secondCtrl">
-		<ul>
-			<li ng-repeat="task in tasksList">
-				{{task.title}}
-				<input ng-model="task.title">
-			</li>
-		</ul>
-	</div>
-	<div ng-controller="thirdCtrl">
-		<ul>
-			<li ng-repeat="task in tasksList">
-				{{task.title}}
-			</li>
-		</ul>
-	</div>
+</div>
+
+<div>LIST OF PRODUCTS - SORTED BY DATE
+
 
 </div>
+
